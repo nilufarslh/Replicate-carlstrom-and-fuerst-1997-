@@ -1,0 +1,229 @@
+%=========================================================================%
+%                         DSGE Model Estimation                           %
+%          Carlstrom and Fuerst (1997) Model with Risk Shocks             %
+%                         Modified: February 2025                         %
+%=========================================================================%
+% This script estimates a DSGE model based on Carlstrom and Fuerst (1997) 
+% using Bayesian methods in Dynare. The model incorporates financial frictions, 
+% risk shocks, and firm borrowing constraints to examine macroeconomic dynamics.
+%
+% Key Features:
+% - Bayesian estimation of structural parameters using U.S. macroeconomic data 
+%   (1980Q1–2019Q4) from FRED.
+% - Log-differencing of output and consumption to ensure stationarity.
+% - Posterior estimation with MCMC sampling and convergence diagnostics.
+% - Mode-finding using optimization routines, followed by posterior inference.
+% - Computation of smoothed shocks and historical decomposition.
+%
+% Results Summary:
+% - Posterior estimates suggest high persistence in productivity shocks.
+% - Risk shocks (SE_eM) play a dominant role in explaining macroeconomic fluctuations.
+% - Model tracks historical GDP and consumption well, but parameter identification 
+%   issues may exist for certain variables.
+%
+%=========================================================================%
+
+% If you find any problem in this code, email to: Nea22@sfu.ca
+% Niloufar Eslah
+
+
+% ==========================
+% Declare Variables
+% ==========================
+var 
+    K ke H log_H He LA log_LA h q log_q n i omegab 
+    C Cc Ce cc ce log_C w we Y log_Y r log_r
+    I log_I Bankruptcy Rb rpBANK log_rpBANK rpENT lev rif 
+    PHI phi f g A log_A mu;
+
+varexo eA eM;
+
+parameters 
+    alpha zeta beta delta gamma eta 
+    S p M sigma chi 
+    rhoA rhomu;  
+
+% ==========================
+% Model Parameters (Calibrated)
+% ==========================
+alpha   = 0.29868;             % Capital share in production (calibrated)
+zeta    = 1 - alpha - 0.0001;  % Labor share adjustment
+beta    = 0.91872;             % Discount factor (calibrated)
+delta   = 0.040853;            % Depreciation rate (calibrated)
+chi     = 0.0096672;           % Labor disutility parameter (calibrated)
+
+gamma   = 0.9474;              % Persistence in preferences
+eta     = 0.1;                 % Fraction of entrepreneurs
+sigma   = 2;                   % Risk aversion parameter
+
+% Financial Frictions & Monitoring Costs
+S       = 0.27; 
+p       = pi;                  
+M       = -0.5 * S^2;          
+
+% Shock Process Parameters
+rhoA    = 0.85;                
+rhomu   = 0.32;                % Financial Shock Persistence
+
+
+
+% ==========================
+% Model Equations
+% ==========================
+model;
+    % Euler Equation
+    (Cc^(-sigma)) = beta * (Cc(+1)^(-sigma)) * ((r(+1) + q(+1)*(1-delta)) / q);
+
+    % Labor Supply Condition
+    chi * H^(1/2) = w * (Cc^(-sigma));  
+
+    % Capital and Investment Equations
+    ke = i*f - ce/q;
+    n = we + (ke(-1)) * (q * (1 - delta) + r) - mu * PHI;
+    K = (1-delta)*K(-1) + I*(1-mu*PHI);
+    (1-eta)*Cc + eta*Ce + eta*i = Y;
+
+    % Price and Investment Equations
+    q = (beta*gamma) * (r(+1) + q(+1)*(1-delta)) * ( (q(+1)*f(+1))/(1-q(+1)*g(+1)) );
+    log_q = log(q) - log(q(-1));
+    q = 1/(1 - mu*PHI - (mu*phi*f)/(1-PHI));
+    i = (1/(1-q*g)) * n;
+
+    % Production Function
+    Y = A*(K(-1)^alpha)*(H^zeta)*(He^(1-alpha-zeta));
+    log_Y = log(Y) - log(Y(-1));
+    log_A = log(A) - log(A(-1));
+    r = alpha*A*(K(-1)^(alpha-1))*(H^zeta)*(He^(1-alpha-zeta));
+    log_r = log(r) - log(r(-1));
+    w = zeta*A*(K(-1)^alpha)*(H^(zeta-1))*(He^(1-alpha-zeta));
+    we = (1-alpha-zeta)*A*(K(-1)^alpha)*(H^zeta)*He^(-(alpha+zeta));
+
+    % Labor Allocation
+    LA = Y/H;
+    log_LA = log(LA) - log(LA(-1));
+    H = (1-eta)*h;
+    log_H = log(H) - log(H(-1));
+    He = eta;
+
+    % Consumption and Bankruptcy Conditions
+    Cc = (1-eta)*cc;       
+    Ce = eta*ce;            
+    C = (1-eta)*cc + eta*ce;
+    log_C = log(C) - log(C(-1));
+    I = eta*i;
+    log_I = log(I) - log(I(-1));
+    Bankruptcy = PHI;         
+
+    % Financial Equations
+    Rb = (q*i*omegab)/(i-n); 
+    rpBANK = Rb - 1;
+    log_rpBANK = log(rpBANK) - log(rpBANK(-1));
+    lev = i/n;              
+    rif = q*f*i/n;          
+    rpENT = q*(1+r)-Rb;      
+
+    % Monitoring and Default Probability Equations
+    PHI = normcdf((log(omegab)-M)/S);  
+    phi = normpdf((log(omegab)-M)/S) / (omegab*S);                                    
+    g   = normcdf((log(omegab)-M)/S - S) - PHI*mu + (1-PHI)*omegab; 
+    f   = 1 - mu*PHI - g;    
+
+    % Shock Process
+    A = (1-rhoA) + rhoA*A(-1) + eA;
+    mu    = (1-rhomu) + rhomu*mu(-1) + eM;
+end;
+
+
+% ==========================
+% Initial Values (Updated)
+% ==========================
+
+initval;
+    % Given Initial Values
+    omegab  = 0.674;
+    PHI     = normcdf((log(omegab)-M)/S);
+    phi     = normpdf((log(omegab)-M)/S) / (omegab*S);
+    g       = normcdf((log(omegab)-M)/S - S) - PHI*mu + (1-PHI)*omegab;
+    f       = 1-mu*PHI- g;
+    q       = 1/(1-mu*0.01+(gamma-1)*f);
+    r       = q*((1-beta*(1-delta))/beta);
+    H       = 0.3;
+    He      = eta;
+    h       = 0.3/(1-eta);
+    K       = (alpha/r)^(1/(1-alpha))*(He^(1-alpha-zeta))*(H^(zeta/(1-alpha)));
+    Y       = (K^alpha)*(H^zeta)*(He^(1-alpha-zeta));
+    i       = (delta/(eta*(1-mu*0.01)))*K;
+    n       = (1-g*q)*i;
+    ke      = (beta/q)*(eta*n-(1-alpha-zeta)*Y);
+    ce      = q*(f*i-(ke/eta));
+    cc      = (Y - eta*ce - eta*i)/(1-eta);
+    A       = 0.85;
+    mu      = 0.32;
+
+    % Additional Variables to Initialize
+    C       = cc + ce;      % Total Consumption
+    Cc      = cc;           % Consumption by Consumers
+    Ce      = ce;           % Consumption by Entrepreneurs
+    w       = zeta*Y/H;     % Wage Rate (Derived from Labor Market Condition)
+    we      = (1-alpha-zeta)*Y/He;  % Entrepreneurial Wage
+    
+    I       = i;            % Investment is same as i
+    Bankruptcy = PHI;       % Bankruptcy rate (Set equal to PHI)
+    
+    Rb      = r + 0.02;     % Borrowing Rate (Arbitrarily Set Close to r)
+    rpBANK  = Rb - 1;       % Bank Risk Premium
+    rpENT   = q*(1+r) - Rb; % Entrepreneurial Risk Premium
+    
+    lev     = i/n;          % Leverage Ratio
+    rif     = q*f*i/n;      % Return on Investment
+    
+    LA      = Y/H;          % Labor Productivity
+end;
+
+
+
+steady;
+check;
+
+
+% ==========================
+% Define Shocks
+% ==========================
+shocks;
+    var eA; stderr 0.005;
+    var eM; stderr 0.014;
+end;
+
+
+
+% ==========================
+% Declare Shock Distribution
+estimated_params;
+    rhoA, beta_pdf, 0.85, 0.02;   % Reduce standard deviation to 0.02
+    rhomu, beta_pdf, 0.32, 0.02;  % Reduce standard deviation
+    stderr eA, inv_gamma_pdf, 0.005, 8;  % Increase shape parameter to 8
+    stderr eM, inv_gamma_pdf, 0.005, 8;  % Increase shape parameter
+end;
+
+
+
+% ==========================
+% Declare Observed Variables
+% ==========================
+  varobs log_A log_rpBANK;
+
+
+% ==========================
+% Bayesian Estimation
+% ==========================
+estimated_params_init(use_calibration);
+end;
+
+ estimation(order=1, datafile='macro_data_log.csv', mh_replic=20000, mh_nblocks=2, mode_compute=6, mh_jscale=0.25, mode_check);
+
+
+
+% ==========================
+% Run Simulation
+% ==========================
+ stoch_simul(order=1, hp_filter=1600, periods=200) log_Y log_C log_I log_r log_q log_LA log_A log_H log_rpBANK;
