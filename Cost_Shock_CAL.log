@@ -1,0 +1,311 @@
+Starting Dynare (version 6.2).
+Calling Dynare with arguments: none
+Starting preprocessing of the model file ...
+Found 41 equation(s).
+Evaluating expressions...
+Computing static model derivatives (order 1).
+Normalizing the static model...
+Finding the optimal block decomposition of the static model...
+9 block(s) found:
+  8 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 19 equation(s)
+                                 and 19 feedback variable(s).
+Computing dynamic model derivatives (order 1).
+Normalizing the dynamic model...
+Finding the optimal block decomposition of the dynamic model...
+7 block(s) found:
+  6 recursive block(s) and 1 simultaneous block(s).
+  the largest simultaneous block has 19 equation(s)
+                                 and 16 feedback variable(s).
+Preprocessing completed.
+Preprocessing time: 0h00m01s.
+
+STEADY-STATE RESULTS:
+
+K          		 15.1423
+ke         		 3.00184
+H          		 4.80584
+log_H      		 0
+He         		 0.1
+LA         		 1.40832
+log_LA     		 0
+h          		 5.33982
+q          		 1.0323
+log_q      		 0
+n          		 3.37773
+i          		 6.19836
+omegab     		 0.442865
+C          		 6.87293
+Cc         		 6.82628
+Ce         		 0.0466476
+cc         		 7.58475
+ce         		 0.466476
+log_C      		 0
+w          		 0.987541
+we         		 0.00676815
+Y          		 6.76815
+log_Y      		 0
+r          		 0.133501
+log_r      		 0
+I          		 0.619836
+log_I      		 0
+Bankruptcy 		 0.0019781
+Rb         		 1.00463
+rpBANK     		 0.004633
+log_rpBANK 		 0
+rpENT      		 0.165477
+lev        		 1.83506
+rif        		 1.05552
+PHI        		 0.0019781
+phi        		 0.052496
+f          		 0.5572
+g          		 0.440822
+A          		 1
+log_A      		 0
+mu         		 1
+
+EIGENVALUES:
+         Modulus             Real        Imaginary
+               0                0                0
+               0                0                0
+               0                0                0
+       1.451e-17       -1.451e-17                0
+       3.482e-17        3.482e-17                0
+       1.033e-16        1.033e-16                0
+       8.446e-16        8.446e-16                0
+       2.001e-14        2.001e-14                0
+            0.32             0.32                0
+          0.3923           0.3923                0
+          0.8164           0.8164                0
+            0.85             0.85                0
+           1.301            1.301                0
+           20.85            20.85                0
+       5.024e+17        5.024e+17                0
+       6.509e+17        6.509e+17                0
+       7.249e+17       -7.249e+17                0
+
+There are 5 eigenvalue(s) larger than 1 in modulus for 5 forward-looking variable(s)
+The rank condition is verified.
+
+
+You did not declare endogenous variables after the estimation/calib_smoother command.
+Initial value of the log posterior (or likelihood): -643317308.2421
+
+==========================================================
+   Change in the posterior covariance matrix = 63.9968.
+   Change in the posterior mean = 23.1856.
+   Current mode = -212.0236
+   Mode improvement = 643317520.2657
+   New value of jscale = 0.0005331
+==========================================================
+
+==========================================================
+   Change in the posterior covariance matrix = 2.5658.
+   Change in the posterior mean = 0.4773.
+   Current mode = -254.3977
+   Mode improvement = 42.3741
+   New value of jscale = 0.072505
+==========================================================
+
+==========================================================
+   Change in the posterior covariance matrix = 1.6257.
+   Change in the posterior mean = 10.0499.
+   Current mode = -394.79
+   Mode improvement = 140.3924
+   New value of jscale = 0.61997
+==========================================================
+
+Optimal value of the scale parameter = 0.61997
+
+
+Final value of minus the log posterior (or likelihood):-394.790047 
+
+MODE CHECK
+
+Fval obtained by the optimization routine: -394.790047
+
+RESULTS FROM POSTERIOR ESTIMATION
+parameters
+      prior mean     mode    s.d.  prior pstdev
+
+rhoA      0.8500   0.9472  0.0008   beta 0.0200 
+rhomu     0.3200   0.2766  0.0035   beta 0.0200 
+
+standard deviation of shocks
+      prior mean     mode    s.d.  prior pstdev
+
+eA        0.0050   0.0121  0.0007   invg 8.0000 
+eM        0.0050  10.8004  1.0006   invg 8.0000 
+
+
+Log data density [Laplace approximation] is 378.024575.
+
+Estimation::mcmc: Multiple chains mode.
+Estimation::mcmc: Old mh-files successfully erased!
+Estimation::mcmc: Old metropolis.log file successfully erased!
+Estimation::mcmc: Creation of a new metropolis.log file.
+Estimation::mcmc: Searching for initial values...
+Estimation::mcmc: Initial values found!
+
+Estimation::mcmc: Write details about the MCMC... Ok!
+Estimation::mcmc: Details about the MCMC are available in Cost_Shock_CAL/metropolis/Cost_Shock_CAL_mh_history_0.mat
+
+
+Estimation::mcmc: Number of mh files: 1 per block.
+Estimation::mcmc: Total number of generated files: 2.
+Estimation::mcmc: Total number of iterations: 20000.
+Estimation::mcmc: Current acceptance ratio per chain:
+                                                       Chain  1: 34.965%
+                                                       Chain  2: 35.335%
+Estimation::mcmc: Total number of MH draws per chain: 20000.
+Estimation::mcmc: Total number of generated MH files: 1.
+Estimation::mcmc: I'll use mh-files 1 to 1.
+Estimation::mcmc: In MH-file number 1 I'll start at line 10001.
+Estimation::mcmc: Finally I keep 10000 draws per chain.
+
+
+
+MCMC Inefficiency factors per block
+Parameter       Block 1     Block 2
+SE_eA            44.907      46.173
+SE_eM            65.684      69.140
+rhoA             20.985      26.385
+rhomu           188.549     135.129
+
+
+
+Convergence diagnostics results for chain 1.
+
+Geweke (1992) Convergence Tests, based on means of draws 10000 to 12000 vs 15000 to 20000 for chain 1.
+p-values are for Chi2-test for equality of means.
+Parameter         Post. Mean        Post. Std   p-val No Taper   p-val 4% Taper   p-val 8% Taper  p-val 15% Taper
+SE_eA                  0.012            0.001            0.000            0.498            0.558            0.593
+SE_eM                 10.904            0.857            0.000            0.027            0.054            0.068
+rhoA                   0.947            0.000            0.494            0.869            0.874            0.876
+rhomu                  0.276            0.008            0.000            0.017            0.046            0.056
+
+
+
+
+Convergence diagnostics results for chain 2.
+
+Geweke (1992) Convergence Tests, based on means of draws 10000 to 12000 vs 15000 to 20000 for chain 2.
+p-values are for Chi2-test for equality of means.
+Parameter         Post. Mean        Post. Std   p-val No Taper   p-val 4% Taper   p-val 8% Taper  p-val 15% Taper
+SE_eA                  0.012            0.001            0.026            0.711            0.726            0.740
+SE_eM                 10.924            0.858            0.000            0.014            0.030            0.034
+rhoA                   0.947            0.000            0.003            0.508            0.497            0.491
+rhomu                  0.276            0.008            0.000            0.050            0.104            0.126
+
+
+Univariate convergence diagnostic, Brooks and Gelman (1998):
+    Parameter 1...  Done! 
+    Parameter 2...  Done! 
+    Parameter 3...  Done! 
+    Parameter 4...  Done! 
+
+marginal density: I'm computing the posterior mean and covariance...  Done!
+marginal density: I'm computing the posterior log marginal density (modified harmonic mean)... Done!
+
+
+ESTIMATION RESULTS
+
+Log data density (Modified Harmonic Mean) is 377.160392.
+parameters
+        prior mean   post. mean        90% HPD interval    prior       pstdev
+
+rhoA         0.850       0.9468      0.9462      0.9472     beta       0.0200
+rhomu        0.320       0.2758      0.2612      0.2883     beta       0.0200
+
+standard deviation of shocks
+        prior mean   post. mean        90% HPD interval    prior       pstdev
+
+eA           0.005       0.0123      0.0112      0.0135     invg       8.0000
+eM           0.005      10.9376      9.4702     12.2859     invg       8.0000
+
+MODEL SUMMARY
+
+  Number of variables:         41
+  Number of stochastic shocks: 2
+  Number of state variables:   12
+  Number of jumpers:           5
+  Number of static variables:  26
+
+
+MATRIX OF COVARIANCE OF EXOGENOUS SHOCKS
+Variables            eA          eM
+eA             0.000152    0.000000
+eM             0.000000  119.632174
+
+POLICY AND TRANSITION FUNCTIONS
+                               log_Y           log_C           log_I           log_r           log_q          log_LA           log_A           log_H      log_rpBANK
+K(-1)                       0.009140        0.020106       -0.062505       -0.056900       -0.012688        0.024235               0       -0.015095       -0.469831
+ke(-1)                      0.014418        0.002559        0.226953        0.014418       -0.024444       -0.006143               0        0.020562       -0.905103
+H(-1)                              0               0               0               0               0               0               0       -0.208080               0
+LA(-1)                             0               0               0               0               0       -0.710067               0               0               0
+C(-1)                              0       -0.145498               0               0               0               0               0               0               0
+Y(-1)                      -0.147751               0               0               0               0               0               0               0               0
+I(-1)                              0               0       -1.613331               0               0               0               0               0               0
+rpBANK(-1)                         0               0               0               0               0               0               0               0     -215.842870
+A(-1)                       0.701358        0.505861        1.695113        0.701358        0.366394        1.051345       -0.053224       -0.349987       13.566862
+mu(-1)                     -0.001030        0.000772       -0.017273       -0.001030        0.001802        0.000439               0       -0.001469        0.005268
+q(-1)                              0               0               0               0       -0.968713               0               0               0               0
+r(-1)                              0               0               0       -7.490596               0               0               0               0               0
+eA                          0.740785        0.534298        1.790405        0.740785        0.386991        1.110448        1.000000       -0.369662       14.329538
+eM                         -0.003735        0.002801       -0.062633       -0.003735        0.006535        0.001591               0       -0.005327        0.019102
+
+
+MOMENTS OF SIMULATED VARIABLES (HP filter, lambda = 1600)
+VARIABLE                MEAN       STD. DEV.        VARIANCE        SKEWNESS        KURTOSIS
+log_Y               0.000235        0.048554        0.002357        0.038464       -0.502351
+log_C               0.000963        0.047298        0.002237       -0.290892       -0.657536
+log_I              -0.007520        0.876397        0.768071        0.166680       -0.622229
+log_r              -0.001657        0.068046        0.004630        0.179869       -0.673474
+log_q               0.000542        0.087996        0.007743       -0.200601       -0.597252
+log_LA              0.001443        0.035560        0.001265       -0.458706       -0.427297
+log_A               0.000517        0.013870        0.000192       -0.499411        0.536907
+log_H              -0.001208        0.078551        0.006170        0.234873       -0.662012
+log_rpBANK          0.008229        0.476764        0.227304       -0.134080       -0.371503
+
+
+CORRELATION OF SIMULATED VARIABLES (HP filter, lambda = 1600)
+VARIABLE           log_Y       log_C       log_I       log_r       log_q      log_LA       log_A       log_H  log_rpBANK
+log_Y             1.0000     -0.8950      0.9784      0.9327     -0.9634     -0.7380      0.0403      0.9522     -0.2403
+log_C            -0.8950      1.0000     -0.9652     -0.9487      0.9611      0.9501      0.3176     -0.9834      0.1803
+log_I             0.9784     -0.9652      1.0000      0.9577     -0.9934     -0.8614     -0.1451      0.9947     -0.2660
+log_r             0.9327     -0.9487      0.9577      1.0000     -0.9217     -0.8312     -0.0287      0.9528     -0.0392
+log_q            -0.9634      0.9611     -0.9934     -0.9217      1.0000      0.8785      0.2284     -0.9932      0.3523
+log_LA           -0.7380      0.9501     -0.8614     -0.8312      0.8785      1.0000      0.5796     -0.9088      0.3001
+log_A             0.0403      0.3176     -0.1451     -0.0287      0.2284      0.5796      1.0000     -0.2374      0.4821
+log_H             0.9522     -0.9834      0.9947      0.9528     -0.9932     -0.9088     -0.2374      1.0000     -0.2844
+log_rpBANK       -0.2403      0.1803     -0.2660     -0.0392      0.3523      0.3001      0.4821     -0.2844      1.0000
+
+
+AUTOCORRELATION OF SIMULATED VARIABLES (HP filter, lambda = 1600)
+VARIABLE            1        2        3        4        5
+log_Y         -0.2688  -0.1997  -0.0848   0.2639  -0.1058
+log_C         -0.3509  -0.1070  -0.1579   0.2702  -0.0436
+log_I         -0.3098  -0.1660  -0.1302   0.2611  -0.0689
+log_r         -0.2518  -0.1886  -0.1044   0.2376  -0.0975
+log_q         -0.3056  -0.1505  -0.1482   0.2452  -0.0550
+log_LA        -0.2207  -0.0943  -0.1669   0.1835  -0.0142
+log_A         -0.0473  -0.2126   0.0327  -0.0335  -0.0634
+log_H         -0.3097  -0.1512  -0.1483   0.2511  -0.0521
+log_rpBANK     0.0375  -0.4019  -0.0437  -0.0561  -0.0690
+
+
+
+VARIANCE DECOMPOSITION SIMULATING ONE SHOCK AT A TIME (in percent) (HP filter, lambda = 1600)
+                            eA                eM  Tot. lin. contr.
+log_Y                     4.48            103.11            107.59
+log_C                     2.35             93.52             95.88
+log_I                     0.21            101.31            101.52
+log_r                     2.79            103.81            106.60
+log_q                     0.62             97.93             98.55
+log_LA                   18.59             69.00             87.59
+log_A                   101.01              0.00            101.01
+log_H                     0.60             97.70             98.30
+log_rpBANK               28.87             75.55            104.42
+Note: numbers do not add up to 100 due to non-zero correlation of simulated shocks in small samples
+
+Total computing time : 0h12m05s
